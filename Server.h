@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HttpRequest.h"
 #include "ISocket.h"
 
 namespace Prism
@@ -12,6 +13,10 @@ public:
     ~Server();
     void Run() const;
     bool Shutdown();
+
+private:
+    void ServerSocketSetup() const;
+    HttpRequest GetClientHttpRequest(const std::unique_ptr<ISocket>& clientSocket) const;
 
 private:
     std::unique_ptr<ISocket> m_ServerSocket;
