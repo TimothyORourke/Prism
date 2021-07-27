@@ -1,6 +1,12 @@
 #include "HttpResponse.h"
 
-HttpResponse::HttpResponse()
+std::unordered_map<HttpResponse::HttpResponseCode, std::string> HttpResponse::s_StatusTextMap = 
+    {
+        {HttpResponse::HttpResponseCode::OK, "OK"}
+    };
+
+HttpResponse::HttpResponse(const std::string& response)
+    : m_Response(response)
 {
     m_Response = "HTTP/1.1 200 OK\n"
                "Content-Length: \n"
@@ -21,4 +27,9 @@ std::string HttpResponse::GetString() const
 const char* HttpResponse::GetCString() const
 {
     return m_Response.c_str();
+}
+
+std::string HttpResponse::GetStatusText(HttpResponseCode code) const
+{
+    return s_StatusTextMap[code];
 }

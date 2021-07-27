@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-static Server server;
+static Prism::Server server;
 
 void sigint_handler(int signal) {
     if (server.Shutdown()) {

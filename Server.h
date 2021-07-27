@@ -2,6 +2,9 @@
 
 #include "ISocket.h"
 
+namespace Prism
+{
+
 class Server
 {
 public:
@@ -13,3 +16,5 @@ public:
 private:
     std::unique_ptr<ISocket> m_ServerSocket;
 };
+
+}

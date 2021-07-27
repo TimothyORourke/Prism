@@ -1,11 +1,17 @@
 #include "Server.h"
 
+#include "Core.h"
 #include "HttpResponse.h"
 #include "LinuxSocket.h"
+#include "HttpRequest.h"
+#include "HttpRequestParser.h"
 
 #include <cstring>
 #include <iostream>
 #include <sstream>
+
+namespace Prism
+{
 
 Server::Server()
 {
@@ -35,21 +41,17 @@ void Server::Run() const
     {
         auto clientSocket = m_ServerSocket->Accept();
 
-        char requestBuffer[10000];
+        char requestBuffer[MAX_REQUEST_LENGTH];
         memset(&requestBuffer, 0, sizeof(requestBuffer));
-        int read = clientSocket->Read(requestBuffer, 10000);
-        std::stringstream ss(requestBuffer);
-        char requestFirstLine[100];
-        memset(&requestFirstLine, 0, sizeof(requestFirstLine));
-        ss.getline(requestFirstLine, 100);
+        int bytesRead = clientSocket->Read(requestBuffer, MAX_REQUEST_LENGTH);
         
-        //std::cout << requestBuffer << std::endl;
+        HttpRequestParser requestParser(requestBuffer);
+        HttpRequest request = requestParser.GetRequest();
 
-        std::cout << clientSocket->GetIPAddress() << ":" << clientSocket->GetPort() << "\n" << requestFirstLine << std::endl;
-        std::cout << "bytes read: " << read << std::endl;
-        //std::cout << requestBuffer;
+        std::cout << clientSocket->GetIPAddress() << ":" << clientSocket->GetPort() << " \"";
+        std::cout << request.GetMethodText() << " " << request.GetPath() << " " << request.GetVersion() << "\"\n";
 
-        HttpResponse response;
+        HttpResponse response("<h1>Hi</h1>");
         clientSocket->Write(response);
         clientSocket->Close();
     }
@@ -58,4 +60,6 @@ void Server::Run() const
 bool Server::Shutdown()
 {
     return m_ServerSocket->Close();
+}
+
 }

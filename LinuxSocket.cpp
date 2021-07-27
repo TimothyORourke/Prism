@@ -92,8 +92,6 @@ std::unique_ptr<ISocket> LinuxSocket::Accept()
         inet_ntop(AF_INET6, &clientAddress.sin_addr.s_addr, clientAddressBuffer, sizeof(clientAddressBuffer));
     }
 
-    //inet_ntop(AF_INET, &clientAddress.sin_addr.s_addr, clientAddressBuffer, sizeof(clientAddressBuffer));
-
     return std::make_unique<LinuxSocket>(clientSocket, type, clientAddressBuffer, (int) clientAddress.sin_port);
 }
 
