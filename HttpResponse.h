@@ -14,7 +14,6 @@ public:
     HttpResponse(const std::string& response);
     ~HttpResponse();
     virtual std::string GetString() const override;
-    virtual const char* GetCString() const override;
 
     std::string GetStatusText(HttpResponseCode code) const;
 

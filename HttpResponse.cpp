@@ -24,11 +24,6 @@ std::string HttpResponse::GetString() const
     return m_Response;
 }
 
-const char* HttpResponse::GetCString() const
-{
-    return m_Response.c_str();
-}
-
 std::string HttpResponse::GetStatusText(HttpResponseCode code) const
 {
     return s_StatusTextMap[code];

@@ -102,7 +102,7 @@ int LinuxSocket::Read(char* buffer, size_t size)
 
 int LinuxSocket::Write(const IHttpResponse& response)
 {
-    return write(m_SocketID, response.GetCString(), response.GetString().length());
+    return write(m_SocketID, response.GetString().c_str(), response.GetString().length());
 }
 
 bool LinuxSocket::Close()
