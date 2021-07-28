@@ -4,6 +4,7 @@
 #include "HttpRequest.h"
 #include "HttpRequestParser.h"
 #include "HttpResponse.h"
+#include "HttpResponseBuilder.h"
 #include "LinuxSocket.h"
 
 #include <cstring>
@@ -36,9 +37,7 @@ void Server::Run() const
         std::cout << clientSocket->GetIPAddress() << ":" << clientSocket->GetPort() << " \"";
         std::cout << request.GetMethodText() << " " << request.GetPath() << " " << request.GetVersion() << "\"\n";
 
-        HttpResponse response("<h1>Hi</h1>");
-        clientSocket->Write(response);
-        clientSocket->Close();
+        HandleRequest(request, clientSocket);
     }
 }
 
@@ -60,16 +59,26 @@ void Server::ServerSocketSetup() const
         std::cout << "Error: server socket failed to listen." << std::endl;
         exit(EXIT_FAILURE);
     }
+
+    std::cout << "Server listening on port " << m_ServerSocket->GetPort() << "..." << std::endl;
 }
 
 HttpRequest Server::GetClientHttpRequest(const std::unique_ptr<ISocket>& clientSocket) const
 {
     char requestBuffer[MAX_REQUEST_LENGTH];
-    memset(&requestBuffer, 0, sizeof(requestBuffer));
+    memset(&requestBuffer, 0, MAX_REQUEST_LENGTH);
     clientSocket->Read(requestBuffer, MAX_REQUEST_LENGTH);
     
     HttpRequestParser requestParser(requestBuffer);
     return requestParser.GetRequest();
+}
+
+void Server::HandleRequest(const HttpRequest& request, const std::unique_ptr<ISocket>& clientSocket) const
+{
+    HttpResponse response = HttpResponseBuilder().SetRequestMethod(request.GetMethod()).SetResourcePath(request.GetPath()).Build();
+    std::cout << response.GetString() << std::endl;
+    clientSocket->Write(response);
+    clientSocket->Close();
 }
 
 }

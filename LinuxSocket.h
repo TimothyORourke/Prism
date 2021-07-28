@@ -8,6 +8,9 @@
 #include <unistd.h>
 #include <signal.h>
 
+namespace Prism
+{
+
 class LinuxSocket : public ISocket
 {
 public:
@@ -18,7 +21,7 @@ public:
     virtual bool Listen() override;
     virtual std::unique_ptr<ISocket> Accept() override;
     virtual int Read(char* buffer, size_t size) override;
-    virtual int Write(const IHttpResponse& response) override;
+    virtual int Write(const HttpResponse& response) override;
     virtual bool Close() override;
 
     virtual std::string GetIPAddress() const override;
@@ -30,3 +33,5 @@ private:
     int m_Port;
     ISocket::Type m_Type;
 };
+
+}

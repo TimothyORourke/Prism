@@ -2,6 +2,9 @@
 
 #include <cstring>
 
+namespace Prism
+{
+
 LinuxSocket::LinuxSocket(ISocket::Type type, const std::string& ipAddress, int port)
     : m_Type(type), m_IPAddress(ipAddress), m_Port(port)
 {
@@ -100,7 +103,7 @@ int LinuxSocket::Read(char* buffer, size_t size)
     return read(m_SocketID, (void*) buffer, size);
 }
 
-int LinuxSocket::Write(const IHttpResponse& response)
+int LinuxSocket::Write(const HttpResponse& response)
 {
     return write(m_SocketID, response.GetString().c_str(), response.GetString().length());
 }
@@ -121,4 +124,6 @@ std::string LinuxSocket::GetIPAddress() const
 int LinuxSocket::GetPort() const 
 {
     return m_Port;
+}
+
 }

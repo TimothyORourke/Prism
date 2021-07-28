@@ -1,19 +1,19 @@
 #include "HttpResponse.h"
 
+namespace Prism
+{
+
 std::unordered_map<HttpResponse::HttpResponseCode, std::string> HttpResponse::s_StatusTextMap = 
     {
-        {HttpResponse::HttpResponseCode::OK, "OK"}
+        {HttpResponse::HttpResponseCode::OK, "OK"},
+        {HttpResponse::HttpResponseCode::NOT_FOUND, "Not Found"},
+        {HttpResponse::HttpResponseCode::NOT_IMPLEMENTED, "Not Implemented"}
     };
 
-HttpResponse::HttpResponse(const std::string& response)
-    : m_Response(response)
+HttpResponse::HttpResponse()
 {
-    m_Response = "HTTP/1.1 200 OK\n"
-               "Content-Length: \n"
-               "Content-Type: text/html\n"
-               "\n"
-               "<!DOCTYPE html><html><head><title>Index</title></head><body><h1>Example Index Page</h1></body></html>\n";
 }
+
 HttpResponse::~HttpResponse()
 {
 
@@ -21,10 +21,24 @@ HttpResponse::~HttpResponse()
 
 std::string HttpResponse::GetString() const
 {
-    return m_Response;
+    std::string responseString;
+
+    responseString += m_ResponseHttpVersion + " " + std::to_string(m_ResponseCode) 
+                   + " " + GetStatusText(m_ResponseCode) + "\n";
+
+    for (const auto& header : m_ResponseHeaders)
+    {
+        responseString += header + "\n";
+    }
+
+    responseString += "\n" + m_ResponseBody;
+
+    return responseString;
 }
 
-std::string HttpResponse::GetStatusText(HttpResponseCode code) const
+std::string HttpResponse::GetStatusText(HttpResponseCode code)
 {
     return s_StatusTextMap[code];
+}
+
 }

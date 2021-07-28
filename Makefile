@@ -1,6 +1,6 @@
 CC 			= g++
 CFLAGS 		= -Wall
-OBJFILES 	= Server.o HttpResponse.o HttpRequest.o HttpRequestParser.o LinuxSocket.o Main.o
+OBJFILES 	= Server.o HttpRequest.o HttpRequestParser.o HttpResponse.o HttpResponseBuilder.o LinuxSocket.o Main.o
 TARGET 		= prism
 
 all: $(TARGET)

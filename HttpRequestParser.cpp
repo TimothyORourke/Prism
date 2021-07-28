@@ -28,6 +28,7 @@ HttpRequest HttpRequestParser::GetRequest() const
     {
         newRequest.SetMethod(HttpRequest::GET);
     }
+
     newRequest.SetPath(path);
     newRequest.SetVersion(version);
 
