@@ -5,7 +5,8 @@ namespace Prism
 
 std::unordered_map<HttpRequest::Method, std::string> HttpRequest::s_MethodTextMap = 
     {
-        {HttpRequest::Method::GET, "GET"}
+        {HttpRequest::Method::GET, "GET"},
+        {HttpRequest::Method::HEAD, "HEAD"}
     };
 
 HttpRequest::HttpRequest()

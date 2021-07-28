@@ -11,7 +11,8 @@ class HttpRequest
 public:
 
     enum Method {
-        GET
+        GET,
+        HEAD
     };
 
     HttpRequest();

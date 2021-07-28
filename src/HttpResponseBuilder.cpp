@@ -43,6 +43,10 @@ HttpResponse HttpResponseBuilder::Build()
     {
         GenerateHttpGETResponse(response);
     }
+    else if (m_RequestMethod == HttpRequest::Method::HEAD)
+    {
+        GenerateHttpHEADResponse(response);
+    }
     else
     {
         response.SetResponseHttpVersion("HTTP/1.1");
@@ -78,6 +82,33 @@ void HttpResponseBuilder::GenerateHttpGETResponse(HttpResponse& response)
         response.SetResponseHttpVersion("HTTP/1.1");
         response.SetResponseCode(HttpResponse::NOT_FOUND);
         response.SetResponseBody(GetDefault404ResponseBody(m_ResourcePath));
+    }
+}
+
+void HttpResponseBuilder::GenerateHttpHEADResponse(HttpResponse& response)
+{
+    if (m_ResourcePath == "/")
+    {
+        m_ResourcePath = "/index.html";
+    }
+
+    std::ifstream resource(m_ResourcePath.substr(1, m_ResourcePath.length() - 1));
+    if (resource) // Resource exists.
+    {
+        std::stringstream ss;
+        while (resource.good())
+        {
+            resource >> ss.rdbuf();
+        }
+
+        response.SetResponseHttpVersion("HTTP/1.1");
+        response.SetResponseCode(HttpResponse::OK);
+    }
+    else
+    {
+        // Create 404 response.
+        response.SetResponseHttpVersion("HTTP/1.1");
+        response.SetResponseCode(HttpResponse::NOT_FOUND);
     }
 }
 

@@ -28,6 +28,10 @@ HttpRequest HttpRequestParser::GetRequest() const
     {
         newRequest.SetMethod(HttpRequest::GET);
     }
+    else if (method == "HEAD")
+    {
+        newRequest.SetMethod(HttpRequest::HEAD);
+    }
 
     newRequest.SetPath(path);
     newRequest.SetVersion(version);

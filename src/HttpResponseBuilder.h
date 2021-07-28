@@ -20,6 +20,7 @@ public:
 
 private:
     void GenerateHttpGETResponse(HttpResponse& response);
+    void GenerateHttpHEADResponse(HttpResponse& response);
     std::string GetDefault404ResponseBody(const std::string& resourcePath) const;
 
 private:
