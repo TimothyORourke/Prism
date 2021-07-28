@@ -39,11 +39,11 @@ HttpResponse HttpResponseBuilder::Build()
 {
     HttpResponse response;
 
-    if (m_RequestMethod == HttpRequest::Method::GET)
+    if (m_RequestMethod == HttpRequest::GET)
     {
         GenerateHttpGETResponse(response);
     }
-    else if (m_RequestMethod == HttpRequest::Method::HEAD)
+    else if (m_RequestMethod == HttpRequest::HEAD)
     {
         GenerateHttpHEADResponse(response);
     }
