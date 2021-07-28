@@ -83,7 +83,7 @@ void HttpResponseBuilder::GenerateHttpGETResponse(HttpResponse& response)
 
 std::string HttpResponseBuilder::GetDefault404ResponseBody(const std::string& resourcePath) const
 {
-    return  "<!DOCTYPE html><html><head><title>Index</title></head><body>"
+    return  "<!DOCTYPE html><html><head><title>404 - Not Found</title></head><body>"
             "<h1>Not Found</h1>"
             "<p>The requested URL " + resourcePath + " was not found on this server.</p>"
             "<hr>"
