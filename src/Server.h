@@ -21,6 +21,8 @@ private:
 
 private:
     std::unique_ptr<ISocket> m_ServerSocket;
+
+    static const unsigned int MAX_REQUEST_LENGTH = 3072;
 };
 
 }
