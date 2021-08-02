@@ -12,7 +12,7 @@ LinuxSocket::LinuxSocket(ISocket::Type type, const std::string& ipAddress, int p
     {
         m_SocketID = socket(AF_INET, SOCK_STREAM, 0);
     }
-    else if (m_Type = ISocket::Type::IPV6)
+    else if (m_Type == ISocket::Type::IPV6)
     {
         m_SocketID = socket(AF_INET6, SOCK_STREAM, 0);
     }
@@ -73,12 +73,8 @@ std::unique_ptr<ISocket> LinuxSocket::Accept()
     socklen_t clientAddressSize;
     int clientSocket = accept(m_SocketID, (struct sockaddr*) &clientAddress, &clientAddressSize);
 
-    ISocket::Type type;
-    if (clientAddress.sin_family == AF_INET)
-    {
-        type = ISocket::Type::IPV4;
-    }
-    else if (clientAddress.sin_family == AF_INET6)
+    ISocket::Type type = ISocket::Type::IPV4;
+    if (clientAddress.sin_family == AF_INET6)
     {
         type = ISocket::Type::IPV6;
     }

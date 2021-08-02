@@ -16,6 +16,9 @@ public:
         IPV6
     };
 
+    ISocket() = default;
+    virtual ~ISocket() = default;
+
     virtual bool Bind() = 0;
     virtual bool Listen() = 0;
     virtual std::unique_ptr<ISocket> Accept() = 0;
