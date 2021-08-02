@@ -1,6 +1,6 @@
 # Prism
 
-Prism is a HTTP/1.1 web server written by me in C++. It can serve static webpages when it receives a request from a web browser. 
+Prism is an HTTP/1.1 web server written by me in C++. It can serve static webpages when it receives a request from a web browser. 
 
 ![Prism](screenshot.png?raw=true "Prism")
 
