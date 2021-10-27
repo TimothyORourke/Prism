@@ -27,6 +27,7 @@ private:
     HttpRequest::Method m_RequestMethod;
     std::string m_ResourcePath;
     std::vector<std::string> m_RequestHeaders;
+    std::vector<std::string> m_ResponseHeaders;
 };
 
 }

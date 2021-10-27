@@ -75,6 +75,7 @@ void HttpResponseBuilder::GenerateHttpGETResponse(HttpResponse& response)
         response.SetResponseHttpVersion("HTTP/1.1");
         response.SetResponseCode(HttpResponse::OK);
         response.SetResponseBody(ss.str());
+        response.AddHeader("Content-Length", std::to_string(ss.str().size()));
     }
     else
     {

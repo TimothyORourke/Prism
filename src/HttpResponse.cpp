@@ -26,14 +26,23 @@ std::string HttpResponse::GetString() const
     responseString += m_ResponseHttpVersion + " " + std::to_string(m_ResponseCode) 
                    + " " + GetStatusText(m_ResponseCode) + "\n";
 
-    for (const auto& header : m_ResponseHeaders)
-    {
-        responseString += header + "\n";
-    }
+    responseString += GetHeadersString();
 
     responseString += "\n" + m_ResponseBody;
 
     return responseString;
+}
+
+std::string HttpResponse::GetHeadersString() const
+{
+    std::string responseHeadersString;
+
+    for (const auto& header : m_ResponseHeaders)
+    {
+        responseHeadersString += header + "\n";
+    }
+
+    return responseHeadersString;
 }
 
 std::string HttpResponse::GetStatusText(HttpResponseCode code)

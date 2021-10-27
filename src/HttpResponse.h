@@ -22,11 +22,12 @@ public:
     inline void SetResponseHttpVersion(const std::string& version) { m_ResponseHttpVersion = version; }
     inline HttpResponseCode GetResponseCode() const { return m_ResponseCode; }
     inline void SetResponseCode(HttpResponseCode code) { m_ResponseCode = code; }
-    inline void AddHeader(const std::string& header) { m_ResponseHeaders.push_back(header); }
+    inline void AddHeader(const std::string& name, const std::string& value) { m_ResponseHeaders.push_back(name + ": " + value); }
     inline std::string GetResponseBody() const { return m_ResponseBody; }
     inline void SetResponseBody(const std::string& body) { m_ResponseBody = body; }
 
     std::string GetString() const;
+    std::string GetHeadersString() const;
 
     static std::string GetStatusText(HttpResponseCode code);
 
