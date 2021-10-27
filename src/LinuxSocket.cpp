@@ -102,7 +102,6 @@ int LinuxSocket::Read(char* buffer, size_t size)
 
 int LinuxSocket::Write(const HttpResponse& response)
 {
-    std::cout << "Response Headers:\n" << response.GetHeadersString();
     return write(m_SocketID, response.GetString().c_str(), response.GetString().length());
 }
 

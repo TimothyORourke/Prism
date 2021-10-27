@@ -99,6 +99,8 @@ void Server::HandleRequest(const HttpRequest& request, const std::unique_ptr<ISo
               << response.GetStatusText(response.GetResponseCode()) 
               << ")" << std::endl;
 
+    std::cout << "Response Headers:\n" << response.GetHeadersString();
+
     clientSocket->Write(response);
     clientSocket->Close();
 }
