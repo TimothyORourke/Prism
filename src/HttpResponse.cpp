@@ -39,7 +39,7 @@ std::string HttpResponse::GetHeadersString() const
 
     for (const auto& header : m_ResponseHeaders)
     {
-        responseHeadersString += header + "\n";
+        responseHeadersString += header.ToString() + "\n";
     }
 
     return responseHeadersString;
