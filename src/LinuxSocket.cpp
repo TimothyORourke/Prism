@@ -6,7 +6,7 @@
 namespace Prism
 {
 
-LinuxSocket::LinuxSocket(ISocket::Type type, const std::string& ipAddress, int port)
+LinuxSocket::LinuxSocket(const std::string& ipAddress, int port, ISocket::Type type)
     : m_Type(type), m_IPAddress(ipAddress), m_Port(port)
 {
     if (m_Type == ISocket::Type::IPV4)
@@ -19,7 +19,7 @@ LinuxSocket::LinuxSocket(ISocket::Type type, const std::string& ipAddress, int p
     }
 }
 
-LinuxSocket::LinuxSocket(int socketID, ISocket::Type type, const std::string& ipAddress, int port)
+LinuxSocket::LinuxSocket(int socketID, const std::string& ipAddress, int port, ISocket::Type type)
     : m_SocketID(socketID), m_Type(type), m_IPAddress(ipAddress), m_Port(port)
 {
 }
@@ -92,7 +92,7 @@ std::unique_ptr<ISocket> LinuxSocket::Accept()
         inet_ntop(AF_INET6, &clientAddress.sin_addr.s_addr, clientAddressBuffer, sizeof(clientAddressBuffer));
     }
 
-    return std::make_unique<LinuxSocket>(clientSocket, type, clientAddressBuffer, (int) clientAddress.sin_port);
+    return std::make_unique<LinuxSocket>(clientSocket, clientAddressBuffer, (int) clientAddress.sin_port, type);
 }
 
 int LinuxSocket::Read(char* buffer, size_t size)
@@ -102,7 +102,7 @@ int LinuxSocket::Read(char* buffer, size_t size)
 
 int LinuxSocket::Write(const HttpResponse& response)
 {
-    return write(m_SocketID, response.GetString().c_str(), response.GetString().length());
+    return write(m_SocketID, response.ToString().c_str(), response.ToString().length());
 }
 
 bool LinuxSocket::Close()
@@ -111,16 +111,6 @@ bool LinuxSocket::Close()
         return false;
     }
     return true;
-}
-
-std::string LinuxSocket::GetIPAddress() const
-{
-    return m_IPAddress;
-}
-
-int LinuxSocket::GetPort() const 
-{
-    return m_Port;
 }
 
 }

@@ -16,7 +16,7 @@ namespace Prism
 
 Server::Server()
 {
-    m_ServerSocket = std::make_unique<LinuxSocket>(ISocket::Type::IPV4, "", 8000);
+    m_ServerSocket = std::make_unique<LinuxSocket>("", 8000, ISocket::Type::IPV4);
 }
 
 Server::~Server()

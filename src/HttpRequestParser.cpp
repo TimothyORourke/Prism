@@ -5,17 +5,6 @@
 namespace Prism
 {
 
-HttpRequestParser::HttpRequestParser(std::string rawRequest)
-    : m_RawRequest(rawRequest)
-{
-
-}
-
-HttpRequestParser::~HttpRequestParser()
-{
-
-}
-
 HttpRequest HttpRequestParser::GetRequest() const
 {
     HttpRequest newRequest;
@@ -31,6 +20,22 @@ HttpRequest HttpRequestParser::GetRequest() const
     else if (method == "HEAD")
     {
         newRequest.SetMethod(HttpRequest::HEAD);
+    }
+    else if (method == "POST")
+    {
+        newRequest.SetMethod(HttpRequest::POST);
+    }
+    else if (method == "PUT")
+    {
+        newRequest.SetMethod(HttpRequest::PUT);
+    }
+    else if (method == "DELETE")
+    {
+        newRequest.SetMethod(HttpRequest::DELETE);
+    }
+    else
+    {
+        newRequest.SetMethod(HttpRequest::INVALID);
     }
 
     newRequest.SetPath(path);

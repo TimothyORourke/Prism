@@ -7,16 +7,6 @@
 namespace Prism
 {
 
-HttpResponseBuilder::HttpResponseBuilder()
-{
-
-}
-
-HttpResponseBuilder::~HttpResponseBuilder()
-{
-    
-}
-
 HttpResponseBuilder& HttpResponseBuilder::SetRequestMethod(HttpRequest::Method method)
 {
     m_RequestMethod = method;
@@ -29,34 +19,29 @@ HttpResponseBuilder& HttpResponseBuilder::SetResourcePath(const std::string& pat
     return *this;
 }
 
-HttpResponseBuilder& HttpResponseBuilder::SetRequestHeaders(const std::vector<std::string> headers)
-{
-    m_RequestHeaders = headers;
-    return *this;
-}
-
 HttpResponse HttpResponseBuilder::Build()
 {
     HttpResponse response;
 
     if (m_RequestMethod == HttpRequest::GET)
     {
-        GenerateHttpGETResponse(response);
+        GenerateHttpGetResponse(response);
     }
     else if (m_RequestMethod == HttpRequest::HEAD)
     {
-        GenerateHttpHEADResponse(response);
+        GenerateHttpHeadResponse(response);
     }
     else
     {
         response.SetResponseHttpVersion("HTTP/1.1");
         response.SetResponseCode(HttpResponse::NOT_IMPLEMENTED);
+        response.SetResponseBody(GetDefault501ResponseBody(HttpRequest::GetMethodText(m_RequestMethod)));
     }
 
     return response;
 }
 
-void HttpResponseBuilder::GenerateHttpGETResponse(HttpResponse& response)
+void HttpResponseBuilder::GenerateHttpGetResponse(HttpResponse& response)
 {
     if (m_ResourcePath == "/")
     {
@@ -86,7 +71,7 @@ void HttpResponseBuilder::GenerateHttpGETResponse(HttpResponse& response)
     }
 }
 
-void HttpResponseBuilder::GenerateHttpHEADResponse(HttpResponse& response)
+void HttpResponseBuilder::GenerateHttpHeadResponse(HttpResponse& response)
 {
     if (m_ResourcePath == "/")
     {
@@ -118,6 +103,15 @@ std::string HttpResponseBuilder::GetDefault404ResponseBody(const std::string& re
     return  "<!DOCTYPE html><html><head><title>404 - Not Found</title></head><body>"
             "<h1>Not Found</h1>"
             "<p>The requested URL " + resourcePath + " was not found on this server.</p>"
+            "<hr>"
+            "</body></html>\n";
+}
+
+std::string HttpResponseBuilder::GetDefault501ResponseBody(const std::string& method) const
+{
+    return  "<!DOCTYPE html><html><head><title>501 - Not Implemented</title></head><body>"
+            "<h1>Not Implemented</h1>"
+            "<p>The HTTP request method " + method + " is not implemented by this server.</p>"
             "<hr>"
             "</body></html>\n";
 }

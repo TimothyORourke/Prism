@@ -10,24 +10,23 @@ namespace Prism
 class HttpResponseBuilder
 {
 public:
-    HttpResponseBuilder();
-    ~HttpResponseBuilder();
+    HttpResponseBuilder() {}
+    ~HttpResponseBuilder() {}
 
     HttpResponseBuilder& SetRequestMethod(HttpRequest::Method method);
     HttpResponseBuilder& SetResourcePath(const std::string& path);
-    HttpResponseBuilder& SetRequestHeaders(const std::vector<std::string> headers);
+
     HttpResponse Build();
 
 private:
-    void GenerateHttpGETResponse(HttpResponse& response);
-    void GenerateHttpHEADResponse(HttpResponse& response);
+    void GenerateHttpGetResponse(HttpResponse& response);
+    void GenerateHttpHeadResponse(HttpResponse& response);
     std::string GetDefault404ResponseBody(const std::string& resourcePath) const;
+    std::string GetDefault501ResponseBody(const std::string& method) const;
 
 private:
     HttpRequest::Method m_RequestMethod;
     std::string m_ResourcePath;
-    std::vector<std::string> m_RequestHeaders;
-    std::vector<std::string> m_ResponseHeaders;
 };
 
 }

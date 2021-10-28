@@ -14,18 +14,19 @@ namespace Prism
 class LinuxSocket : public ISocket
 {
 public:
-    LinuxSocket(ISocket::Type type, const std::string& ipAddress, int port);
-    LinuxSocket(int socketID, ISocket::Type type, const std::string& ipAddress, int port);
+    LinuxSocket(const std::string& ipAddress, int port, ISocket::Type type);
+    LinuxSocket(int socketID, const std::string& ipAddress, int port, ISocket::Type type);
     ~LinuxSocket();
+
+    virtual std::string GetIPAddress() const override { return m_IPAddress; }
+    virtual int GetPort() const override { return m_Port; }
+
     virtual bool Bind() override;
     virtual bool Listen() override;
     virtual std::unique_ptr<ISocket> Accept() override;
     virtual int Read(char* buffer, size_t size) override;
     virtual int Write(const HttpResponse& response) override;
     virtual bool Close() override;
-
-    virtual std::string GetIPAddress() const override;
-    virtual int GetPort() const override;
 
 private:
     int m_SocketID;

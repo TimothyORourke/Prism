@@ -8,9 +8,9 @@ namespace Prism
 class HttpHeader 
 {
 public:
-    HttpHeader();
+    HttpHeader() {}
     HttpHeader(const std::string& name, const std::string& value) : m_Name(name), m_Value(value) {}
-    ~HttpHeader();
+    ~HttpHeader() {}
 
     inline std::string GetName() const { return m_Name; }
     inline std::string GetValue() const { return m_Value; }

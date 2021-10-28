@@ -12,20 +12,25 @@ public:
 
     enum Method {
         GET,
-        HEAD
+        HEAD,
+        POST,
+        PUT,
+        DELETE,
+        INVALID
     };
 
-    HttpRequest();
-    ~HttpRequest();
+    HttpRequest() {}
+    ~HttpRequest() {}
 
-    Method GetMethod() const;
-    void SetMethod(Method method);
-    std::string GetPath() const;
-    void SetPath(const std::string& path);
-    std::string GetVersion() const;
-    void SetVersion(const std::string& version);
+    inline Method GetMethod() const { return m_Method; }
+    inline std::string GetPath() const { return m_Path; }
+    inline std::string GetVersion() const { return m_Version; }
+    inline void SetMethod(Method method) { m_Method = method; }
+    inline void SetPath(const std::string& path) { m_Path = path; }
+    inline void SetVersion(const std::string& version) { m_Version = version; }
 
-    std::string GetMethodText() const;
+    std::string GetMethodText() const { return s_MethodTextMap[m_Method]; }
+    static std::string GetMethodText(Method method) { return s_MethodTextMap[method]; }
 
 private:
     Method m_Method;

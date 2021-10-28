@@ -10,8 +10,8 @@ namespace Prism
 class HttpRequestParser
 {
 public: 
-    HttpRequestParser(std::string rawRequest);
-    ~HttpRequestParser();
+    HttpRequestParser(const std::string& rawRequest) : m_RawRequest(rawRequest) {}
+    ~HttpRequestParser() {}
 
     HttpRequest GetRequest() const;
 
